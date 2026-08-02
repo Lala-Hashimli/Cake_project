@@ -10,3 +10,12 @@ class Cake(models.Model):
 
     def __str__(self):
         return self.name
+    
+    
+    
+# {
+#     "id": 1,
+#     "name": "Mars",
+#     "price": 11.9
+    
+# }
