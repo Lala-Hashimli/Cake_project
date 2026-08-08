@@ -1,8 +1,14 @@
 from django.urls import path
-from .views import get_all_cakes
+from .views import CakeAPIView
 
 
 urlpatterns = [
-    path('cakes/', get_all_cakes)
-
+    path(
+        'cakes/', 
+        CakeAPIView.as_view(),
+        name="cake-list"
+    )
 ]
+
+
+
