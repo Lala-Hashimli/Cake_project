@@ -6,7 +6,7 @@ urlpatterns = [
     path(
         'cakes/', 
         CakeAPIView.as_view(),
-        name="cake-list"
+        name="cakes"
     )
 ]
 

@@ -24,3 +24,17 @@ class Cake(models.Model):
 #     "price": 11.9
     
 # }
+
+
+
+'''
+200 - ok
+201 - created
+204 - no content
+
+400 - bad request
+404 - not found
+
+500 - server error
+
+'''
