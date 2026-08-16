@@ -65,11 +65,68 @@ class CakeDetailAPIView(APIView):
             serializer.data,
             status=status.HTTP_200_OK
         )
+
+    def put(self, request, pk):
+
+        cake = get_object_or_404(
+            Cake,
+            pk=pk
+        )
+
+        serializer = CakeSerializer(
+            cake,
+            data=request.data
+        )
         
+        if serializer.is_valid():
+            serializer.save()
+
+            return Response(
+                serializer.data,
+                status=status.HTTP_200_OK
+            )
+
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
+
+    def patch(self, request, pk):
+        cake = get_object_or_404(
+            Cake,
+            pk=pk,
+        )
+
+        serializer = CakeSerializer(
+            cake,
+            data=request.data, 
+            partial=True
+        )
         
+        if serializer.is_valid():
+            serializer.save()
 
+            return Response(
+                serializer.data,
+                status=status.HTTP_200_OK
+            )
 
+        return Response(
+            serializer.errors,
+            status=status.HTTP_400_BAD_REQUEST
+        )
 
+    def delete(self, request, pk):
+        cake = get_object_or_404(
+            Cake,
+            pk=pk
+        )
+
+        cake.delete()
+
+        return Response(
+            status=status.HTTP_204_NO_CONTENT
+        )
         
 """
 price__gte - greater than and equeal >=

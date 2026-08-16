@@ -9,7 +9,7 @@ urlpatterns = [
         name="cakes"
     ),
     path(
-        'cakes/<uuid:pk>/',
+        'cakes/<int:pk>/',
         CakeDetailAPIView.as_view(),
         name="detailed-cake"
     )
