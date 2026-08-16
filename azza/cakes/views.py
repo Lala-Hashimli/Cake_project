@@ -7,13 +7,27 @@ from rest_framework.decorators import api_view
 from rest_framework.views import APIView
 from rest_framework import status
 from drf_yasg.utils import swagger_auto_schema
+from django.shortcuts import get_object_or_404
 
 
 class CakeAPIView(APIView):
     def get(self, request):
-        # cakes =  Cake.objects.order_by("-price")
-        # cakes =  Cake.objects.get(id=1)
-        cakes = Cake.objects.filter(price=8.00)
+        cakes =  Cake.objects.all()
+        
+        search =  request.query_params.get("search")
+        
+        min_price = request.query_params.get("min_price")
+        max_price = request.query_params.get("max_price")
+        
+        if search:
+            cakes = cakes.filter(name__icontains=search)
+            
+        if min_price:
+            cakes = cakes.filter(price__gte=min_price)
+            
+        if max_price:
+            cakes = cakes.filter(price__lt=max_price)
+            
         serializer = CakeSerializer(cakes, many=True)
         
         return Response(
@@ -39,4 +53,37 @@ class CakeAPIView(APIView):
             status=status.HTTP_400_BAD_REQUEST
         )
     
+
+class CakeDetailAPIView(APIView):
+    def get(self, request, pk):
+        cake = get_object_or_404(
+            Cake,
+            pk=pk
+        )
+        serializer = CakeSerializer(cake)    
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK
+        )
+        
+        
+
+
+
+        
+"""
+price__gte - greater than and equeal >=
+price__lte  less than and equeal
+
+price__gt  - greater than
+price__lt - less than
+
+
+
+__  lookup operator
+  
+name__contains="s"
+
+"""
+
 
