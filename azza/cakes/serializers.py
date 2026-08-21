@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Cake
+from .models import Cake, Category
 
 class CakeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -7,6 +7,10 @@ class CakeSerializer(serializers.ModelSerializer):
         fields = "__all__"
         
 
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = "__all__"
         
         
     

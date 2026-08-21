@@ -28,6 +28,12 @@ class CakeAPIView(APIView):
         if max_price:
             cakes = cakes.filter(price__lt=max_price)
             
+        category = request.query_params.get("category")
+        
+        if category:
+            cakes = cakes.filter(category_id=category)
+        
+            
         serializer = CakeSerializer(cakes, many=True)
         
         return Response(
