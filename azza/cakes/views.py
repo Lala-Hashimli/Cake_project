@@ -19,6 +19,7 @@ class CakeAPIView(APIView):
         min_price = request.query_params.get("min_price")
         max_price = request.query_params.get("max_price")
         
+        
         if search:
             cakes = cakes.filter(name__icontains=search)
             

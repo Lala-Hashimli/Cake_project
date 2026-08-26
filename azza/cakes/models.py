@@ -16,9 +16,6 @@ class Ingredients(models.Model):
         return self.name
     
 
-
-
-    
 class Cake(models.Model):
 
     id = models.UUIDField(
@@ -26,6 +23,13 @@ class Cake(models.Model):
         default=uuid.uuid4,
         editable=False
     )
+    
+    STATUS_CHOICES = [
+        ("pending", "Pending"),
+        ("approved", "Approved"),
+        ("rejected", "Rejected")
+    ]
+    
     name = models.CharField(max_length=100)
     price = models.DecimalField(max_digits=6, decimal_places=2)
     discount_price = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
@@ -38,6 +42,12 @@ class Cake(models.Model):
         related_name="cakes",
         null=True,
         blank=True
+    )
+    
+    status = models.CharField(
+        max_length=20,
+        choices=STATUS_CHOICES,
+        default="pending"
     )
     
     ingredients = models.ManyToManyField(
