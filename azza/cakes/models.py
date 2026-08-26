@@ -15,8 +15,12 @@ class Ingredients(models.Model):
     def __str__(self):
         return self.name
     
+
+
+
     
 class Cake(models.Model):
+
     id = models.UUIDField(
         primary_key=True,
         default=uuid.uuid4,
@@ -26,7 +30,7 @@ class Cake(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=2)
     discount_price = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
     stock = models.PositiveIntegerField(default=0)
-    
+    image = models.ImageField(upload_to="products/")
     
     category = models.ForeignKey(
         Category,
@@ -46,3 +50,16 @@ class Cake(models.Model):
         return self.name
     
 
+class Recipe(models.Model):
+    cake = models.OneToOneField(
+        Cake,
+        on_delete= models.SET_NULL,
+        null=True,
+        related_name="recipe"
+    )
+    ingredients = models.TextField()
+    instructions = models.TextField()
+    cooking_time = models.IntegerField()
+
+    def __str__(self):
+        return f"{self.cake.name} recipe"

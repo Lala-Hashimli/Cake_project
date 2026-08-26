@@ -1,10 +1,24 @@
 from rest_framework import serializers
-from .models import Cake, Category
+from .models import Cake, Category, Recipe
+
+class RecipeSerializer(serializers.ModelSerializer):
+    class Meta:
+            model = Recipe
+            fields = "__all__"
+
+
 
 class CakeSerializer(serializers.ModelSerializer):
+    recipe = RecipeSerializer(read_only=True)
     class Meta:
         model = Cake
-        fields = "__all__"
+        fields = [
+             "id",
+             "name",
+             "price",
+             "recipe",
+             "image"
+        ]   
         
 
 class CategorySerializer(serializers.ModelSerializer):
