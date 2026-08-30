@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from .models import Cake
 from .serializers import CakeSerializer
-
+from .utils import send_mail
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework.views import APIView
@@ -50,6 +50,12 @@ class CakeAPIView(APIView):
         
         if serializer.is_valid():
             serializer.save()
+
+            send_mail(
+                subject="Salam",
+                message="Netersen?"
+            )
+
             return Response(
                  serializer.data,
                  status=status.HTTP_201_CREATED
