@@ -130,3 +130,6 @@ EMAIL_USE_SSL = False
 EMAIL_HOST_USER = 'lalahashimli06@gmail.com' 
 EMAIL_HOST_PASSWORD = 'gdyapkppvaudlhab'
 DEFAULT_FROM_EMAIL = 'lalahashimli06@gmail.com' 
+
+
+CELERY_BROKER_URL = "redis://localhost:6379/0"
