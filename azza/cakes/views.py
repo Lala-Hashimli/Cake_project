@@ -51,10 +51,10 @@ class CakeAPIView(APIView):
         if serializer.is_valid():
             serializer.save()
 
-            send_mail(
-                subject="Salam",
-                message="Netersen?"
-            )
+            # send_mail(
+            #     subject="Salam",
+            #     message="Netersen?"
+            # )
 
             return Response(
                  serializer.data,
@@ -141,19 +141,4 @@ class CakeDetailAPIView(APIView):
             status=status.HTTP_204_NO_CONTENT
         )
         
-"""
-price__gte - greater than and equeal >=
-price__lte  less than and equeal
-
-price__gt  - greater than
-price__lt - less than
-
-
-
-__  lookup operator
-  
-name__contains="s"
-
-"""
-
 

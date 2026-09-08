@@ -34,7 +34,7 @@ class Cake(models.Model):
     price = models.DecimalField(max_digits=6, decimal_places=2)
     discount_price = models.DecimalField(max_digits=6, decimal_places=2, null=True, blank=True)
     stock = models.PositiveIntegerField(default=0)
-    image = models.ImageField(upload_to="products/")
+    # image = models.ImageField(upload_to="products/")
     
     category = models.ForeignKey(
         Category,

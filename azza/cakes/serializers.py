@@ -17,7 +17,7 @@ class CakeSerializer(serializers.ModelSerializer):
              "name",
              "price",
              "recipe",
-             "image"
+
         ]   
         
 
