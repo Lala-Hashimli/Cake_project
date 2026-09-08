@@ -8,9 +8,11 @@ from rest_framework.views import APIView
 from rest_framework import status
 from drf_yasg.utils import swagger_auto_schema
 from django.shortcuts import get_object_or_404
+from rest_framework.permissions import IsAuthenticated
 
 
 class CakeAPIView(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request):
         cakes =  Cake.objects.all()
         
@@ -68,6 +70,7 @@ class CakeAPIView(APIView):
     
 
 class CakeDetailAPIView(APIView):
+    permission_classes = [IsAuthenticated]
     def get(self, request, pk):
         cake = get_object_or_404(
             Cake,
