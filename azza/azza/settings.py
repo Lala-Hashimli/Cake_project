@@ -131,3 +131,15 @@ EMAIL_USE_SSL = False
 EMAIL_HOST_USER = 'lalahashimli06@gmail.com' 
 EMAIL_HOST_PASSWORD = 'gdyapkppvaudlhab'
 DEFAULT_FROM_EMAIL = 'lalahashimli06@gmail.com' 
+
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(seconds=60),
+    'REFRESH_TOKEN_LIFETIME': timedelta(minutes=1),
+}
