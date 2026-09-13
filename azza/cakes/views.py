@@ -9,6 +9,7 @@ from rest_framework import status
 from drf_yasg.utils import swagger_auto_schema
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
+from django.core.cache import cache
 
 
 class CakeAPIView(APIView):
@@ -144,4 +145,20 @@ class CakeDetailAPIView(APIView):
             status=status.HTTP_204_NO_CONTENT
         )
         
+class CacheTestAPIView(APIView):
+    def get(self, request):
+        cache.set(
+            "cake_name",
+            "Chocolate Cake",
+            timeout=15
+        )
+
+        # value = cache.get("cake_name")
+        cache.delete("cake_name")
+        
+        value = cache.get("cake_name")
+
+        return Response({
+            "value": value
+        })
 

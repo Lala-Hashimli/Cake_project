@@ -1,5 +1,5 @@
 from django.urls import path
-from .views import CakeAPIView, CakeDetailAPIView
+from .views import CakeAPIView, CakeDetailAPIView, CacheTestAPIView
 
 
 urlpatterns = [
@@ -12,7 +12,11 @@ urlpatterns = [
         'cakes/<uuid:pk>/',
         CakeDetailAPIView.as_view(),
         name="detailed-cake"
-    )
+    ),
+    path(
+        'cache-test/',
+        CacheTestAPIView.as_view()
+    ),
 ]
 
 
