@@ -10,6 +10,7 @@ from drf_yasg.utils import swagger_auto_schema
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from django.core.cache import cache
+import random
 
 
 class CakeAPIView(APIView):
@@ -145,20 +146,63 @@ class CakeDetailAPIView(APIView):
             status=status.HTTP_204_NO_CONTENT
         )
         
-class CacheTestAPIView(APIView):
-    def get(self, request):
-        cache.set(
-            "cake_name",
-            "Chocolate Cake",
-            timeout=15
-        )
+# class CacheTestAPIView(APIView):
+#     def get(self, request):
+#         cache.set(
+#             "cake_name",
+#             "Chocolate Cake",
+#             timeout=15
+#         )
 
-        # value = cache.get("cake_name")
-        cache.delete("cake_name")
+#         # value = cache.get("cake_name")
+#         cache.delete("cake_name")
         
-        value = cache.get("cake_name")
+#         value = cache.get("cake_name")
+
+#         return Response({
+#             "value": value
+#         })
+
+
+class SendOTPView(APIView):
+    def post(self, request):
+        email = request.data.get("email")
+        otp_code = str(random.randint(1000,9999))
+        cache_key = f"otp_{email}"
+        
+        cache.set(
+            cache_key,
+            otp_code,
+            timeout=60
+        )
+        
+        return Response({
+            "message": "otp sent successfully!!!!",
+            "otp": otp_code
+            }
+        )
+        
+
+class VerifyOTPView(APIView):
+    def post(self, request):
+        email = request.data.get("email")
+        otp_code = request.data.get("otp_code")
+
+        cache_key = f"otp_{email}"
+        stored_otp = cache.get(cache_key)
+
+        print("EMAIL:", email)
+        print("OTP FROM POSTMAN:", otp_code)
+        print("OTP FROM REDIS:", stored_otp)
+        print("CACHE KEY:", cache_key)
+
+        if otp_code != stored_otp:
+            return Response({
+                "error": "invalid otp!!!!!"
+            })
+
+        cache.delete(cache_key)
 
         return Response({
-            "value": value
+            "message": "verified!!!!"
         })
-
