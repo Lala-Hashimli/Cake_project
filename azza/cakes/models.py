@@ -25,9 +25,9 @@ class Cake(models.Model):
     )
     
     STATUS_CHOICES = [
-        ("pending", "Pending"),
-        ("approved", "Approved"),
-        ("rejected", "Rejected")
+        ("active", "Active"),
+        ("sold", "Sold"),
+        ("expired", "Expired")
     ]
     
     name = models.CharField(max_length=100)
@@ -47,7 +47,7 @@ class Cake(models.Model):
     status = models.CharField(
         max_length=20,
         choices=STATUS_CHOICES,
-        default="pending"
+        default="active"
     )
     
     ingredients = models.ManyToManyField(
