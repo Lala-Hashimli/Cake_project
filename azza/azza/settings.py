@@ -111,7 +111,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Baku'
 
 USE_I18N = True
 
@@ -155,3 +155,5 @@ CACHES = {
         "LOCATION": "redis://127.0.0.1:6379"
     }
 }
+
+CAKE_TTL = 10

@@ -10,7 +10,6 @@ def advertisement_status_changed(sender, instance, **kwargs):
     if not instance.id:
         return
 
-
     old_instance = Cake.objects.get(id=instance.id)
 
     if old_instance.status != instance.status:
