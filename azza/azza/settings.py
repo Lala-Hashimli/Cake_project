@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'cakes',
+    "users",
     "rest_framework",
     "drf_yasg",
     "rest_framework_simplejwt"
@@ -157,3 +158,5 @@ CACHES = {
 }
 
 CAKE_TTL = 10
+
+AUTH_USER_MODEL = "users.User"
