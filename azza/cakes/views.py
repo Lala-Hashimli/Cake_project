@@ -18,7 +18,6 @@ class CakeAPIView(APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request):
         cakes =  CakeService.get_all_cakes()
-
         serializer = CakeSerializer(cakes, many=True)
         
         return Response(
@@ -55,10 +54,7 @@ class CakeAPIView(APIView):
 class CakeDetailAPIView(APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request, pk):
-        cake = get_object_or_404(
-            Cake,
-            pk=pk
-        )
+        cake =  CakeService.get_cake_by_id()
         serializer = CakeSerializer(cake)    
         return Response(
             serializer.data,

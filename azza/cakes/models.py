@@ -28,6 +28,7 @@ class Cake(models.Model):
         ("active", "Active"),
         ("sold", "Sold"),
         ("expired", "Expired")
+        ("sold", "sold")
     ]
     
     name = models.CharField(max_length=100)
