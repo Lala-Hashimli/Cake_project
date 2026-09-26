@@ -10,42 +10,23 @@ from drf_yasg.utils import swagger_auto_schema
 from django.shortcuts import get_object_or_404
 from rest_framework.permissions import IsAuthenticated
 from django.core.cache import cache
+from .services import CakeService
 import random
 
 
 class CakeAPIView(APIView):
     permission_classes = [IsAuthenticated]
     def get(self, request):
-        cakes =  Cake.objects.all()
-        
-        search =  request.query_params.get("search")
-        
-        min_price = request.query_params.get("min_price")
-        max_price = request.query_params.get("max_price")
-        
-        
-        if search:
-            cakes = cakes.filter(name__icontains=search)
-            
-        if min_price:
-            cakes = cakes.filter(price__gte=min_price)
-            
-        if max_price:
-            cakes = cakes.filter(price__lt=max_price)
-            
-        category = request.query_params.get("category")
-        
-        if category:
-            cakes = cakes.filter(category_id=category)
-        
-            
+        cakes =  CakeService.get_all_cakes()
+
         serializer = CakeSerializer(cakes, many=True)
         
         return Response(
             serializer.data,
             status=status.HTTP_200_OK
             )
-        
+
+
     @swagger_auto_schema(
         request_body=CakeSerializer
     )
