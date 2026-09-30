@@ -64,6 +64,7 @@ class Cake(models.Model):
     
 
 class Recipe(models.Model):
+
     cake = models.OneToOneField(
         Cake,
         on_delete= models.SET_NULL,
@@ -76,3 +77,28 @@ class Recipe(models.Model):
 
     def __str__(self):
         return f"{self.cake.name} recipe"
+
+
+class Bookmark(models.Model):
+    user = models.ForeignKey(
+        "users.User",
+        on_delete=models.CASCADE
+    )
+
+    cake = models.ForeignKey(
+        Cake,
+        on_delete=models.CASCADE
+    )
+
+    bookmarked_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "cake"],
+                name = "unique_user_cake_bookmark"
+            )
+        ]
+
+    def __str__(self):
+        return f"{self.user.email} -> {self.cake.name}"

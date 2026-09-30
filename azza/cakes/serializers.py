@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Cake, Category, Recipe
+from .models import Cake, Category, Recipe, Bookmark
 
 class RecipeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -28,3 +28,8 @@ class CategorySerializer(serializers.ModelSerializer):
         
         
     
+class BookmarkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Bookmark
+        fields = "__all__"
+        

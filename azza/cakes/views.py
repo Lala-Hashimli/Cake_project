@@ -1,6 +1,6 @@
 from django.http import JsonResponse
-from .models import Cake
-from .serializers import CakeSerializer
+from .models import Cake, Bookmark
+from .serializers import CakeSerializer, BookmarkSerializer
 from .utils import send_mail
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
@@ -187,3 +187,60 @@ class VerifyOTPView(APIView):
         return Response({
             "message": "verified!!!!"
         })
+
+
+class AddToBookmarkAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+    
+    def post(self, request, cake_pk):
+        user = request.user
+        cake = Cake.objects.filter(id=cake_pk).first()
+
+        if not cake:
+            return Response(
+                {
+                "message": "Cake not found"
+                }, 
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        bookmark, created = Bookmark.objects.get_or_create(
+            user=user,
+            cake=cake
+        )
+
+        if not created:
+            bookmark.delete()
+
+            return Response(
+                {
+                    "message": "{cake.name} removed from Bookmars"
+                },
+                status=status.HTTP_200_OK
+            )
+
+        serializer = BookmarkSerializer(bookmark)
+
+        return Response(
+            {
+                "message": f"{cake.name} added to bookmarks",
+                "data": serializer.data
+            },
+            status=status.HTTP_201_CREATED
+        )
+
+
+class UserBookmarkAPIView(APIView):
+    def get(self, request):
+        user = request.user
+
+        bookmarks = Bookmark.objects.filter(
+            user=user
+        )
+
+        serializer = BookmarkSerializer(bookmarks, many=True)
+
+        return Response(
+            serializer.data, 
+            status=status.HTTP_200_OK
+        )
