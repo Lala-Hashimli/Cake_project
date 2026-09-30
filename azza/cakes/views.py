@@ -240,3 +240,19 @@ class UserBookmarkAPIView(APIView):
             serializer.data, 
             status=status.HTTP_200_OK
         )
+        
+
+class CakeSearchView(APIView):
+    permission_classes = [IsAuthenticated]
+    def get(self, request):
+        search = request.query_params.get("s")
+            
+        
+        cakes = Cake.objects.filter(name__icontains=search)
+        serializer = CakeSerializer(
+            cakes, many=True
+        )
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK
+        )

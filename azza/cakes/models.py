@@ -27,7 +27,7 @@ class Cake(models.Model):
     STATUS_CHOICES = [
         ("active", "Active"),
         ("sold", "Sold"),
-        ("expired", "Expired")
+        ("expired", "Expired"),
         ("sold", "sold")
     ]
     

@@ -1,6 +1,7 @@
 from django.urls import path
 from .views import ( CakeAPIView, CakeDetailAPIView,SendOTPView,
-                    VerifyOTPView, AddToBookmarkAPIView, UserBookmarkAPIView)
+                    VerifyOTPView, AddToBookmarkAPIView, UserBookmarkAPIView,
+                    CakeSearchView)
 # , CacheTestAPIView
 
 
@@ -27,10 +28,12 @@ urlpatterns = [
 
     path("cakes/<uuid:cake_pk>/bookmark/",
         AddToBookmarkAPIView.as_view(),
-        name="cake-bookmark")
+        name="cake-bookmark"),
+    
+    path("cakes/search/",
+        CakeSearchView.as_view(),
+        name="cake-search")
 
-    
-    
 ]
 
 
