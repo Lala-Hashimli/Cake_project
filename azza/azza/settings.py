@@ -137,13 +137,6 @@ EMAIL_HOST_PASSWORD = 'gdyapkppvaudlhab'
 DEFAULT_FROM_EMAIL = 'lalahashimli06@gmail.com' 
 
 
-REST_FRAMEWORK = {
-    'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
-    )
-}
-
-
 SIMPLE_JWT = {
     'ACCESS_TOKEN_LIFETIME': timedelta(seconds=120),
     'REFRESH_TOKEN_LIFETIME': timedelta(minutes=1),
@@ -162,12 +155,17 @@ CAKE_TTL = 10
 AUTH_USER_MODEL = "users.User"
 
 REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    ),
+
     'DEFAULT_THROTTLE_CLASSES': [
         'rest_framework.throttling.AnonRateThrottle',
-        'rest_framework.throttling.UserRateThrottle'
+        'rest_framework.throttling.UserRateThrottle',
     ],
+
     'DEFAULT_THROTTLE_RATES': {
         'anon': '2/min',
-        'user': '3/min'
-    }
+        'user': '3/min',
+    },
 }
